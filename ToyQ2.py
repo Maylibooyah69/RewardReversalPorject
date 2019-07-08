@@ -164,7 +164,8 @@ class SQFSrat: # Single Q Failure-Success rat
         self.beta=beta
         self.gamma=gamma
         self.env=env
-        self.alpha=alpha
+        self.alphaF=alphaF
+        self.alphaS=alphaS
         self.action_size=env.action_size
         self.obs_size=env.obs_size
         self.Q=0 # Q starts from 0
@@ -184,13 +185,13 @@ class SQFSrat: # Single Q Failure-Success rat
         not getting a reward is the same as going left and not getting'''
         if (obs==np.array([1,0])).all() and (self.choice==np.array([1,0])).all() or\
         (obs==np.array([0,0])).all() and (self.choice==np.array([0,1])).all():
-            self.Q=(1-self.alpha)*self.Q+self.alpha*1 # going left and getting an reward of one
-            self.Q=(1-self.alpha)*self.Q+self.alpha*1
+            self.Q=(1-self.alphaS)*self.Q+self.alphaS*1 # going left and getting an reward of one
+            self.Qlog.append(self.Q)
         elif ((obs==np.array([0,0])).all() and (self.choice==np.array([1,0]))).all() or\
         (obs==np.array([0,1])).all() and (self.choice==np.array([0,1])).all():
-            self.Q=(1-self.alpha)*self.Q # going left and not getting an reward
+            self.Q=(1-self.alphaF)*self.Q # going left and not getting an reward
             self.Qlog.append(self.Q)
-        return self.Q    
+        return self.Q  
     
     
 def train_rat(env,rat,it_num,every=500):
