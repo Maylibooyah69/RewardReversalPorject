@@ -27,38 +27,6 @@ def ratchose(Q): # 0 means left
         return np.array([1,0])
     else:
         return np.array([0,1]) 
-    
-# parameter: action, a list of numpy arrays of action data; reward, a list of np array of reward data
-# beta, sharpness of sigmoid; alpha, learning rate
-# return the sum of log-likelihood
-def neg_log_likelihood(alpha,beta,actions,rewards,Q=[0,0],gamma=0): 
-    n = len(actions)
-    sum_ll = 0
-    for i in range(n):
-        turn = actions[i]
-        rew = rewards[i]
-        Q = Q + alpha*turn*(rew + gamma*np.max(Q)-Q)
-        dQ = Q[0] - Q[1]
-        if np.array_equal(turn,np.array([1,0])):
-            prob = 1/(np.exp(0-beta*dQ)+1)
-        else:
-            prob = 1 - 1/(np.exp(0-beta*dQ)+1)
-        
-        sum_ll = sum_ll - np.log(prob + np.exp(0-8)) # add a smoother to avoid warnings
-    
-    return sum_ll
-
-# params = [alpha0,beta0]
-# args = [actions,rewards]
-def helper_func(params,args):
-    alpha0 = params[0]
-    beta0 = params[1]
-    actions = args[0]
-    rewards = args[1]
-    
-    sum_ll = neg_log_likelihood(alpha0,beta0,actions,rewards)
-    
-    return sum_ll
 
 class toyQ_2choice:
     '''a unchanging env with probability of giving one
