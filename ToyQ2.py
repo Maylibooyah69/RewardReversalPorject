@@ -151,16 +151,20 @@ class SQFSrat: # Single Q Failure-Success rat
         '''Assumes that going going left and get no reward is the
         same as going right and get an reward, and going right and
         not getting a reward is the same as going left and not getting'''
-        if (obs==np.array([1,0])).all() and (self.choice==np.array([1,0])).all() or\
-        (obs==np.array([0,0])).all() and (self.choice==np.array([0,1])).all():
-            self.Q=(1-self.alphaS)*self.Q+self.alphaS*1 # going left and getting an reward of one
+        if (obs==np.array([1,0])).all() and (self.choice==np.array([1,0])).all():
+            self.Q=self.Q-self.alphaS*(1-self.Q)
             self.Qlog.append(self.Q)
-        elif ((obs==np.array([0,0])).all() and (self.choice==np.array([1,0]))).all() or\
-        (obs==np.array([0,1])).all() and (self.choice==np.array([0,1])).all():
-            self.Q=(1-self.alphaF)*self.Q # going left and not getting an reward
+        elif (obs==np.array([0,0])).all() and (self.choice==np.array([1,0])).all():
+            self.Q=self.Q-self.alphaF*(0-self.Q)
+            self.Qlog.append(self.Q)
+        elif (obs==np.array([0,1])).all() and (self.choice==np.array([0,1])).all():
+            self.Q=self.Q-self.alphaS*(0-self.Q)
+            self.Qlog.append(self.Q)
+        elif ((obs==np.array([0,0])).all() and (self.choice==np.array([0,1]))).all():
+            self.Q=self.Q-self.alphaF*(1-self.Q)
             self.Qlog.append(self.Q)
         return self.Q  
-    
+
     
 def train_rat(env,rat,it_num,every=500):
     for i in range(it_num):
