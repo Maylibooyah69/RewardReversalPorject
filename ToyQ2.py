@@ -43,13 +43,11 @@ class toyQ_2choice:
         where 0 is go left and 1 is to right, and returns
         a return reward where 0 is no reward'''
         reward_site = random.uniform(0,1)
-        if reward_site < self.right and np.array_equal(action,np.array([0,1])):
-            #if the rat goes right and the reward is on the right
-            obs=np.array([0,1])
-        elif reward_site >= self.right and np.array_equal(action,np.array([1,0])):
-            obs=np.array([1,0])
+        reward_right=int(reward_site<self.right)+1
+        if reward_right==action:
+            obs=1
         else:
-            obs=np.array([0,0])
+            obs=0
         self.obslog.append(obs)
         return obs
     
