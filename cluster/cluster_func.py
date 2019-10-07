@@ -1,12 +1,10 @@
-
-
 import numpy as np
 import pandas as pd
 from sklearn import mixture
 from sklearn.cluster import KMeans
 
-from sklearn.metrics import calinski_harabasz_score
-#from sklearn.metrics import silhouette_score
+from sklearn.metrics import calinski_harabaz_score
+from sklearn.metrics import silhouette_score
 
 
 
@@ -65,7 +63,7 @@ def fit_kmeans(X,k):
 
     # get silhouette and c-h score
     silhouette = silhouette_score(X,labels)
-    ch = calinski_harabasz_score(X,labels)
+    ch = calinski_harabaz_score(X,labels)
 
     return km,ssd,silhouette,ch,labels
 
