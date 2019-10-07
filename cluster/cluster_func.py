@@ -89,7 +89,7 @@ def kmeans(X,max_k=9):
 
         km_list.append(km)
         ssd_list.append(ssd)
-        silhouette_list.append(slhouette)
+        silhouette_list.append(silhouette)
         ch_list.append(ch)
         label_list.append(labels)
 
