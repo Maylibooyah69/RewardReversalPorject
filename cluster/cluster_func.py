@@ -6,7 +6,7 @@ from sklearn import mixture
 from sklearn.cluster import KMeans
 
 from sklearn.metrics import calinski_harabasz_score
-from sklearn.metrics import silhouette_score
+#from sklearn.metrics import silhouette_score
 
 
 
